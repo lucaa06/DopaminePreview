@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dopamine</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="dopamine-header" id="dopamine-header">
+        <img src="image-removebg-preview.svg" alt="" width="120px" id="dopamine-logo">
+        <h1 id="dopamine-title">DOPAMINE</h1>
+    </div>
+    <div class="sidebar">
+        <div class="slider">
+
+            <div class="icon" style="background-color: #365a5a;border-radius: 25px;">
+                <img src="icons/home.png" alt="" width="30px">
+            </div>
+
+            <div class="icon" >
+                <img src="icons/messaggi.png" alt="" width="30px"style="rotate: 45deg;">
+            </div>
+
+            <div class="icon">
+                <img src="icons/profilo.png" alt="" width="30px">
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="content">
+        <div class="post">
+            <div class="imgPost">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="" width="200px">
+            </div>
+            <h2 id="left">Più nidi di tartarughe in Italia</h2>
+            <p id="left">Lorem ipsum dolor sit amet consectetur adipisicing elit.  <a href="">leggi di più</a></p>
+            <br><br>
+        </div>
+        <div class="post">
+            <div class="imgPost">
+                <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="" width="200px">
+            </div>
+            <h2 id="left">Amazzonia: deforestazione ai minimi</h2>
+            <p id="left">Grazie a nuove politiche ambientali e alla collaborazione internazionale, la deforestazione in Amazzonia è drasticamente diminuita. <a href="">leggi di più</a></p>
+            <br><br>
+        </div>
+        <div class="post">
+            <div class="imgPost">
+                <img src="https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=400&q=80" alt="" width="200px">
+            </div>
+            <h2 id="left">Record energia rinnovabile 2024</h2>
+            <p id="left">Per la prima volta nella storia, le energie rinnovabili hanno superato il 50% della produzione globale di elettricità. <a href="">leggi di più</a></p>
+            <br><br>
+        </div>
+       
+        <div class="post">
+            <div class="imgPost">
+                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="" width="200px">
+            </div>
+            <h2 id="left">Balene: popolazione in crescita</h2>
+            <p id="left">Le balene megattere stanno tornando nei loro habitat naturali dopo decenni di declino, segno che la protezione funziona. <a href="">leggi di più</a></p>
+            <br><br>
+        </div>
+        <div class="post">
+            <div class="imgPost">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" alt="" width="200px">
+            </div>
+            <h2 id="left">India: 1 milione di pasti donati</h2>
+            <p id="left">Un’iniziativa di solidarietà ha permesso di distribuire un milione di pasti caldi alle persone bisognose in tutto il paese. <a href="">leggi di più</a></p>
+            <br><br>
+        </div>
+        <br><br><br><br><br><br><br><br>
+        <div id="end-overlay" class="end-overlay" style="display:none;">
+            <div class="end-message">
+                <span class="close-end" id="close-end">&times;</span>
+                <h2>Hai raggiunto la fine dei post!</h2>
+                <p>Non ci sono altri post da visualizzare.</p>
+            </div>
+        </div>
+    </div>
+<script>
+const content = document.querySelector('.content');
+const header = document.getElementById('dopamine-header');
+const endOverlay = document.getElementById('end-overlay');
+const closeEnd = document.getElementById('close-end');
+
+content.addEventListener('scroll', function() {
+    if (content.scrollTop > 10) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+    // Mostra overlay se sei in fondo
+    if (content.scrollTop + content.clientHeight >= content.scrollHeight - 100) {
+        endOverlay.style.display = 'flex';
+    }
+});
+
+let isPulling = false;
+let startY = 0;
+let pullDistance = 0;
+
+content.addEventListener('touchstart', function(e) {
+    if (content.scrollTop + content.clientHeight >= content.scrollHeight) {
+        isPulling = true;
+        startY = e.touches[0].clientY;
+        pullDistance = 0;
+    }
+});
+
+content.addEventListener('touchmove', function(e) {
+    if (isPulling) {
+        pullDistance = e.touches[0].clientY - startY;
+        if (pullDistance < -40) { // Tira verso l'alto di almeno 40px
+            endOverlay.classList.add('active');
+        }
+    }
+});
+
+content.addEventListener('touchend', function() {
+    isPulling = false;
+    pullDistance = 0;
+    setTimeout(() => {
+        endOverlay.classList.remove('active');
+    }, 1200); // L'overlay resta visibile per 1.2s
+});
+
+closeEnd.addEventListener('click', function() {
+    endOverlay.classList.remove('active');
+    content.scrollTop = 0;
+});
+</script>
+</body>
+</html>
